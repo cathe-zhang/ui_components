@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,28 +8,69 @@
   <title>Document</title>
   <style>
     .mask {
+      position: fixed;
+      top: 0;
+      left: 0;
       width: 100%;
       height: 100%;
       background-color: rgba(0, 0, 0, 0.7);
     }
+
+    #select-box {
+      border-radius: 13px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 300px;
+      background-color: #fff;
+      overflow: hidden;
+    }
+
+    .select-item {
+      height: 2rem;
+      line-height: 2rem;
+      text-align: center;
+    }
   </style>
 </head>
+
 <body>
-  <select name="" id="">
-    <option value="1">1</option>
-    <option value="2">2</option>
-  </select>
+  <div id="demo">点击选择</div>
 
   <div id="mask" class="mask"></div>
-  <div class="select">
+  <div class="select" id="select-box">
     <div class="select-item">1</div>
     <div class="select-item">2</div>
   </div>
 
   <script>
+    var mask = document.querySelector('#mask')
+    var demo = document.querySelector('#demo')
+    var selectBox = document.querySelector('#select-box')
     var deHeight = document.documentElement.clientHeight
-    document.querySelector('#mask').
+    
+    mask.style.height = deHeight + 'px'
+    selectBox.style.maxHeight = deHeight * 0.6 + 'px'
+
+    demo.onclick = function () {
+      mask.style.display = 'block'
+      selectBox.style.display = 'block'
+    }
+    
+    mask.onclick = function () {
+      mask.style.display = 'none'
+      selectBox.style.display = 'none'
+    }
+
+    document.querySelectorAll('.select-item').onclick = function () {
+      console.log(11111111)
+      mask.style.display = 'none'
+      selectBox.style.display = 'none'
+    }
+
   </script>
 
 </body>
+
 </html>
