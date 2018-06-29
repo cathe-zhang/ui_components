@@ -16,44 +16,106 @@
       background-color: rgba(0, 0, 0, 0.7);
     }
 
-    #select-box {
-      border-radius: 13px;
+    .select-box, #select-box {
+      /* border-radius: 13px; */
+      padding: 1rem;
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      width: 300px;
+      width: 14rem;
       background-color: #fff;
       overflow: hidden;
     }
 
     .select-item {
-      height: 2rem;
-      line-height: 2rem;
+      height: 2.5rem;
+      /* padding: 0 1rem; */
       text-align: center;
+      display: flex;
+      align-items: center;
+    }
+    .item-sign {
+      border: 1px solid #ccc;
+      width: 1rem;
+      height: 1rem;
+      border-radius: 50%;
+      margin-right: 0.8rem;
+    }
+    .item-value {
+
+    }
+    .none {
+      display: none;
     }
   </style>
 </head>
 
 <body>
-  <div id="demo">点击选择</div>
+  <div id="demo">请选择支持的球队</div>
 
-  <div id="mask" class="mask"></div>
-  <div class="select" id="select-box">
-    <div class="select-item">1</div>
-    <div class="select-item">2</div>
+  <div id="mask" class="mask none"></div>
+  <div class="select none" id="select-box">
+    <div class="select-item">
+      <div class="item-sign"></div>
+      <div class="item-value">德国</div>
+    </div>
+    <div class="select-item">
+      <div class="item-sign"></div>
+      <div class="item-value">法国</div>
+    </div>
+    <div class="select-item">
+        <div class="item-sign"></div>
+        <div class="item-value">西班牙</div>
+      </div>
+      <div class="select-item">
+          <div class="item-sign"></div>
+          <div class="item-value">阿根廷</div>
+        </div>
+        <div class="select-item">
+            <div class="item-sign"></div>
+            <div class="item-value">巴西</div>
+          </div>
   </div>
 
   <script>
+
+    var data = [
+      '巴西', '德国', '阿根廷', '西班牙', '法国'
+    ]
+    var node = document.querySelector('#select-box')
+
+    selector( node, data)
+
+
+
+    function selector ( node, data ) {
+      node.innerHTML = ''
+      var selectBox = document.createElement('div')
+      selectBox.classList.add('select-box')
+      data.forEach(function(dataItem,dataIndex){
+        var item = document.createElement('div')
+        item.classList.add('select-item')
+
+        // var html = '<div class="select-item">'
+          var html =  '<div class="item-sign"></div>'
+          html +=   '<div class="item-value">'+ dataItem +'</div>'
+          // html +=  '</div>'
+          item.innerHTML = html
+          console.log(item)
+          selectBox.appendChild(item)
+          console.log(selectBox)
+      })
+    }
+
     var mask = document.querySelector('#mask')
-    var demo = document.querySelector('#demo')
     var selectBox = document.querySelector('#select-box')
     var deHeight = document.documentElement.clientHeight
     
     mask.style.height = deHeight + 'px'
     selectBox.style.maxHeight = deHeight * 0.6 + 'px'
 
-    demo.onclick = function () {
+    demo.onclick = function () {  
       mask.style.display = 'block'
       selectBox.style.display = 'block'
     }
@@ -63,11 +125,38 @@
       selectBox.style.display = 'none'
     }
 
-    document.querySelectorAll('.select-item').onclick = function () {
-      console.log(11111111)
-      mask.style.display = 'none'
-      selectBox.style.display = 'none'
-    }
+    console.log(document.querySelectorAll('.select-item'))
+
+    var selectItems = document.querySelectorAll('.select-item')
+    selectItems.forEach(function(item,index){
+      console.log(item)
+      item.onclick = function(){
+        console.log(11111111)
+        selectItems.forEach(function(pItem,pIndex){
+          pItem.children[0].style.backgroundColor = 'transparent'      
+          pItem.children[0].style.border = '1px solid #ccc'  
+        })
+          item.children[0].style.backgroundColor = '#00c1de'      
+          item.children[0].style.border = '1px solid transparent'      
+        setTimeout(function() {
+          console.log(item.children)
+          console.log(item.children[0])
+          // console.log(item.childElementCount)   // 子元素个数
+            mask.style.display = 'none'
+        selectBox.style.display = 'none'
+        demo.innerText = item.children[1].innerText
+        }, 120);
+      }
+    })
+    // selectItems.onclick = function () {
+    //   console.log(1111111)
+    // }
+
+    // document.querySelectorAll('.select-item').onclick = function () {
+    //   console.log(11111111)
+    //   mask.style.display = 'none'
+    //   selectBox.style.display = 'none'
+    // }
 
   </script>
 
